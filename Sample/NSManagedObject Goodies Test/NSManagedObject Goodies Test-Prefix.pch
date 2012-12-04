@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'NSManagedObject Goodies Test' target in the 'NSManagedObject Goodies Test' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
