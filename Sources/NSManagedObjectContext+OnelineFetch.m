@@ -3,8 +3,10 @@
 //  Sample
 //
 //  Created by Jaehwa Han on 12/4/12.
-//  Copyright (c) 2012 Jaehwa Han. All rights reserved.
 //
+//  Original one :
+//  http://www.cocoawithlove.com/2008/03/core-data-one-line-fetch.html
+//  Here, I changed NSSet to NSArray for convenience
 
 #import "NSManagedObjectContext+OnelineFetch.h"
 

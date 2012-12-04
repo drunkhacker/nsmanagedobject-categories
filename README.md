@@ -48,3 +48,13 @@ AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperation
 ### More Details
 See sample project's unit test file for more deatils
 
+
+### Credits
+
+* It is good to go with your modification. But, just leave my copyright
+though.
+* I inspired from [this blog
+post](http://www.cocoawithlove.com/2008/03/core-data-one-line-fetch.html)
+which describes single line fetch category method for
+`NSManagedObjectContext`. In this project, I slightly changed it for my
+flavour.
