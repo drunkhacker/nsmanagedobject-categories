@@ -22,7 +22,8 @@
 + (long)lastDataVersionForName:(NSString *)modelName
 {
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    id dv = [context fetchObjectsForEntityName:@"DataVersion" withPredicate:@"modelName == %@", modelName][0];
+    NSArray *arr = [context fetchObjectsForEntityName:@"DataVersion" withPredicate:@"modelName == %@", modelName];
+    id dv = arr.count == 0 ? nil : arr[0];
     
     return [[dv valueForKey:@"timestamp"] longValue];
 }
@@ -30,7 +31,8 @@
 + (void)markAsLatestForName:(NSString *)modelName
 {
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    id dv = [context fetchObjectsForEntityName:@"DataVersion" withPredicate:@"modelName == %@", modelName][0];
+    NSArray *arr = [context fetchObjectsForEntityName:@"DataVersion" withPredicate:@"modelName == %@", modelName];
+    id dv = arr.count == 0 ? nil : arr[0];
     
     if (dv) {
         [dv setValue:@((long)[[NSDate date] timeIntervalSince1970]) forKey:@"timestamp"];
