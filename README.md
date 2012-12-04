@@ -25,7 +25,8 @@ It supports
 It is typical thing to access API server to get some _Resource_ and persist them to _CoreData_ for caching purpose. The most common representation of a resource is _JSON_. And a JSON object is easily converted to `NSDictionary` using many existing JSON parsers. 
 
 Say, your server has resources named `User` and your iOS application wants to save in CoreData. 
-````objective-c 
+
+```` objective-c
 #import "User.h" //a CoreData model
 #import "NSManagedObject+Convenients.h" //Simply you import it and taste goodies
     
@@ -43,6 +44,7 @@ AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperation
   
 } failure:nil];
 ````
+
 ### More Details
 See sample project's unit test file for more deatils
 
