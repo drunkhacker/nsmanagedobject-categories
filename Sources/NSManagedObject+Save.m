@@ -14,6 +14,13 @@
 {
     
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    return [context save:err];
+    NSError *err2;
+    BOOL f = [context save:&err2];
+    
+    if (!f) {
+        NSLog(@"err = %@", err2.description);
+    }
+    
+    return f;
 }
 @end
