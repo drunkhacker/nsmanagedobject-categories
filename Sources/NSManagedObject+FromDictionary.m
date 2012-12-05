@@ -111,7 +111,7 @@ NSDate *strToDate(NSString *d) {
 + (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key upsert:(BOOL)upsert error:(NSError **)error
 {
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSArray *arr = [self findWithPredicate:@"%@ == %@", key, dict[key]];
+    NSArray *arr = [self findWithPredicate:@"SELF.%@ == %@", key, dict[key]];
     if (arr.count == 0) {
         if (upsert) //insert new one
             return [self insertWithDictionary:dict error:error];
