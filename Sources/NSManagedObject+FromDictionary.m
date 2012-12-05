@@ -123,7 +123,7 @@ NSDate *strToDate(NSString *d) {
         //update
         id obj = arr[0];
         [obj updateWithDictionary:dict];
-        if (![context save:error]) return nil;
+        if (![obj save:error]) return nil;
         return obj;
     }
 }
