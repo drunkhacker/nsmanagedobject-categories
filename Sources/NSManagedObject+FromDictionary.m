@@ -51,6 +51,11 @@ static inline NSDate *strToDate(NSString *d) {
             }
         }
         
+        //NSNull value handling
+        if ((NSNull *)val == [NSNull null]) {
+            val = nil;
+        }
+        
         
         if (val && key) {
             // convert type if needed
