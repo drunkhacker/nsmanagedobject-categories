@@ -14,5 +14,6 @@
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * id;
 
 @end

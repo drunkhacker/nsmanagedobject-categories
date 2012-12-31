@@ -13,5 +13,6 @@
 
 @dynamic title;
 @dynamic createdAt;
+@dynamic id;
 
 @end

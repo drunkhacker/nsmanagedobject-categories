@@ -96,6 +96,32 @@
     STAssertTrue(groups.count == 1, @"There should be only one group");
     
     ////
+    //// Default unique key test (`id` or `_id`)
+    ////
+    NSDictionary *group3 = @{@"title":@"Group 3", @"id":@(42), @"created_at":@(1354653107)};
+    Group *g3 = [Group updateWithDictionary:group3];
+    
+    NSDictionary *group4 = @{@"title":@"Group 4", @"id":@(42), @"created_at":@(1354653108)};
+    Group *g4 = [Group updateWithDictionary:group4];
+    
+    STAssertTrue([g4.title isEqualToString:group4[@"title"]], @"updated comparing id");
+    
+    NSArray *groups2 = [Group findWithPredicate:@"SELF.id == 42"];
+    STAssertTrue(groups2.count == 1, @"There should be only one group with id(42)");
+    
+    ////
+    //// Multi key test (these conditions are concatenated by `AND`)
+    ////
+    NSDictionary *group5 = @{@"title":@"Group 5", @"id":@(43), @"created_at":@(1354653107)};
+    Group *g5 = [Group updateWithDictionary:group5 uniqueKeys:@[@"id", @"title"] upsert:YES error:nil];
+    
+    NSDictionary *group6 = @{@"title":@"Group 6", @"id":@(43), @"created_at":@(1354653108)};
+    Group *g6 = [Group updateWithDictionary:group6 uniqueKeys:@[@"id", @"title"] upsert:YES error:nil];
+    
+    STAssertTrue([[Group findWithPredicate:@"SELF.id == 43"] count] == 2, @"Multikey should be concatenated with AND");
+    
+    
+    ////
     //// Update test
     ////
     g.title = @"friends";
