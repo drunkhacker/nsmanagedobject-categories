@@ -26,4 +26,15 @@
     return obj;
 }
 
+- (id)temporaryObject
+{
+    id<NSManagedObjectContextHolder> holder = (id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *ctx = [holder managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:ctx];
+    NSManagedObject *obj = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+    
+    [obj setValuesForKeysWithDictionary:[self dictionaryWithValuesForKeys:[entity attributesByName].allKeys]];
+    return obj;
+}
+
 @end

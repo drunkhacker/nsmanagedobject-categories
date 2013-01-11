@@ -10,5 +10,6 @@
 
 @interface NSManagedObject (TemporaryObject)
 + (id)temporaryObject;
+- (id)temporaryObject;
 + (id)temporaryObjectWithDictionary:(NSDictionary *)dict;
 @end
