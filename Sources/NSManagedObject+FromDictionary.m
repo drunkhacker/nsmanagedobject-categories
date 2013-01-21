@@ -126,8 +126,6 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
 
 + (id)updateWithDictionary:(NSDictionary *)dict uniqueKeys:(NSArray *)keys upsert:(BOOL)upsert error:(NSError **)error
 {
-    NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    
     NSArray *arr = nil;
     
     //check if this class has a key which is in keys
