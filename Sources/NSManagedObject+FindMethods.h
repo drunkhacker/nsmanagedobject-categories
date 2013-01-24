@@ -13,5 +13,5 @@
 + (id)findOneWithPredicate:(id)stringOrPredicate, ...;
 + (NSArray *)findWithPredicate:(NSPredicate *)pred andSortDescriptor:(NSSortDescriptor *)descriptor;
 + (NSArray *)findWithPredicate:(NSPredicate *)pred sortDescriptor:(NSSortDescriptor *)descriptor andFetchLimit:(NSUInteger)limit;
-
++ (NSUInteger)countWithPredicate:(id)stringOrPredicate, ...;
 @end

@@ -14,4 +14,5 @@
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName withPredicate:(id)stringOrPredicate, ...;
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName withPredicate:(NSPredicate *)predicate andSortDescriptor:(NSSortDescriptor *)descriptor;
 - (NSArray *)fetchObjectsForEntityName:(NSString *)newEntityName withPredicate:(NSPredicate *)predicate sortDescriptor:(NSSortDescriptor *)descriptor andFetchLimit:(NSUInteger)limit;
+- (NSUInteger)countObjectForEntityName:(NSString *)newEntityName withPredicate:(id)stringOrPredicate, ...;
 @end

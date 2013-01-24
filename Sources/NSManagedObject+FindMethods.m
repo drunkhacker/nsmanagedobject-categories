@@ -79,4 +79,9 @@
     return [ctx fetchObjectsForEntityName:NSStringFromClass([self class]) withPredicate:pred sortDescriptor:descriptor andFetchLimit:limit];
 }
 
++ (NSUInteger)countWithPredicate:(id)stringOrPredicate, ... {
+    NSManagedObjectContext *ctx = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
+
+    return [ctx countObjectForEntityName:NSStringFromClass([self class]) withPredicate:stringOrPredicate];
+}
 @end
