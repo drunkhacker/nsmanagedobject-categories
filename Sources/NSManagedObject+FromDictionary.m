@@ -175,7 +175,6 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
 
 + (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key upsert:(BOOL)upsert error:(NSError **)error
 {
-    NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSArray *arr = [self findWithPredicate:equalPredicate(key, dict[key])];
     
     if (arr.count == 0) {
