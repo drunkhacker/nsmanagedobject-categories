@@ -57,7 +57,7 @@ static inline NSDate *strToDate(NSString *d) {
         }
         
         
-        if (val && key) {
+        if (key) {
             // convert type if needed
             
             NSString *propertyAttributes = (NSString *)@(property_getAttributes(property));
