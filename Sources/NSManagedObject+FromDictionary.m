@@ -55,8 +55,7 @@ static inline NSDate *strToDate(NSString *d) {
         if ((NSNull *)val == [NSNull null]) {
             val = nil;
         }
-        
-        
+
         if (key) {
             // convert type if needed
             
@@ -78,7 +77,6 @@ static inline NSDate *strToDate(NSString *d) {
             else if ([propertyAttributes hasPrefix:@"T@\"NSData\""] && [val isKindOfClass:[NSArray class]]) {
                 val = [NSKeyedArchiver archivedDataWithRootObject:val];
             }
-            
             [self setValue:val forKey:key];
         }
     }
