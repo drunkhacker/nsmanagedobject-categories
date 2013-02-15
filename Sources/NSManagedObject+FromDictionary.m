@@ -82,14 +82,14 @@ static inline NSDate *strToDate(NSString *d) {
     }
 }
 
-+ (id)insertWithDictionary:(NSDictionary *)dict error:(NSError **)error
++ (id)insertWithDictionary:(NSDictionary *)dict error:(NSError **)error commit:(BOOL)commit
 {
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSManagedObject *instance = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
     
     [instance updateWithDictionary:dict];
     
-    if (![context save:error]) return nil;
+    if (commit && ![context save:error]) return nil;
     return instance;
 }
 
@@ -97,32 +97,32 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
     return [NSPredicate predicateWithFormat:@"SELF.%K == %@", key, value];
 }
 
-+ (id)insertWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key error:(NSError **)error
++ (id)insertWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key error:(NSError **)error commit:(BOOL)commit
 {
     NSArray *arr = [self findWithPredicate:equalPredicate(key, dict[key])];
     if (arr.count == 0) {
         //insert new one
-        return [self insertWithDictionary:dict error:error];
+        return [self insertWithDictionary:dict error:error commit:commit];
     } else {
         *error = nil;
         return nil;
     }
 }
 
-+ (id)updateWithDictionary:(NSDictionary *)dict {
-    return [self updateWithDictionary:dict uniqueKeys:@[@"id", @"_id"] upsert:YES error:nil]; //_id for mongoDB
++ (id)updateWithDictionary:(NSDictionary *)dict commit:(BOOL)commit{
+    return [self updateWithDictionary:dict uniqueKeys:@[@"id", @"_id"] upsert:YES error:nil commit:commit]; //_id for mongoDB
 }
 
-+ (id)updateWithDictionary:(NSDictionary *)dict error:(NSError **)error {
-    return [self updateWithDictionary:dict uniqueKeys:@[@"id", @"_id"] upsert:YES error:error]; //_id for mongoDB
++ (id)updateWithDictionary:(NSDictionary *)dict error:(NSError **)error commit:(BOOL)commit {
+    return [self updateWithDictionary:dict uniqueKeys:@[@"id", @"_id"] upsert:YES error:error commit:commit]; //_id for mongoDB
 }
 
-+ (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key error:(NSError **)error
++ (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key error:(NSError **)error commit:(BOOL)commit 
 {
-    return [self updateWithDictionary:dict uniqueKey:key upsert:YES error:error];
+    return [self updateWithDictionary:dict uniqueKey:key upsert:YES error:error commit:commit];
 }
 
-+ (id)updateWithDictionary:(NSDictionary *)dict uniqueKeys:(NSArray *)keys upsert:(BOOL)upsert error:(NSError **)error
++ (id)updateWithDictionary:(NSDictionary *)dict uniqueKeys:(NSArray *)keys upsert:(BOOL)upsert error:(NSError **)error commit:(BOOL)commit
 {
     NSArray *arr = nil;
     
@@ -157,7 +157,7 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
 
     if (arr.count == 0) {
         if (upsert) //insert new one
-            return [self insertWithDictionary:dict error:error];
+            return [self insertWithDictionary:dict error:error commit:commit];
         else {
             *error = nil;
             return nil;
@@ -166,18 +166,20 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
         //update
         id obj = arr[0];
         [obj updateWithDictionary:dict];
-        if (![obj save:error]) return nil;
+        if (commit && ![obj save:error]) return nil;
         return obj;
     }
 }
 
-+ (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key upsert:(BOOL)upsert error:(NSError **)error
+
+
++ (id)updateWithDictionary:(NSDictionary *)dict uniqueKey:(NSString *)key upsert:(BOOL)upsert error:(NSError **)error commit:(BOOL)commit
 {
     NSArray *arr = [self findWithPredicate:equalPredicate(key, dict[key])];
     
     if (arr.count == 0) {
         if (upsert) //insert new one
-            return [self insertWithDictionary:dict error:error];
+            return [self insertWithDictionary:dict error:error commit:commit];
         else {
             *error = nil;
             return nil;
@@ -186,7 +188,7 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
         //update
         id obj = arr[0];
         [obj updateWithDictionary:dict];
-        if (![obj save:error]) return nil;
+        if (commit && ![obj save:error]) return nil;
         return obj;
     }
 }

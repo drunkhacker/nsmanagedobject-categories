@@ -15,6 +15,10 @@
     return [self lastDataVersionForName:NSStringFromClass([self class])];
 }
 
++ (void)markTime:(long)ts {
+    [self markTime:ts forName:NSStringFromClass([self class])];
+}
+
 + (void)markAsLatest {
     [self markAsLatestForName:NSStringFromClass([self class])];
 }
@@ -28,14 +32,14 @@
     return [[dv valueForKey:@"timestamp"] longValue];
 }
 
-+ (void)markAsLatestForName:(NSString *)modelName
++ (void)markTime:(long)ts forName:(NSString *)modelName
 {
     NSManagedObjectContext *context = [(id<NSManagedObjectContextHolder>)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSArray *arr = [context fetchObjectsForEntityName:@"DataVersion" withPredicate:@"modelName == %@", modelName];
     id dv = arr.count == 0 ? nil : arr[0];
     
     if (dv) {
-        [dv setValue:@((long)[[NSDate date] timeIntervalSince1970]) forKey:@"timestamp"];
+        [dv setValue:@(ts) forKey:@"timestamp"];
         [dv setValue:modelName forKey:@"modelName"];
         NSError *error;
         if (![context save:&error]) {
@@ -43,13 +47,19 @@
         }
     } else {
         dv = [NSEntityDescription insertNewObjectForEntityForName:@"DataVersion" inManagedObjectContext:context];
-        [dv setValue:@((long)[[NSDate date] timeIntervalSince1970]) forKey:@"timestamp"];
+        [dv setValue:@(ts) forKey:@"timestamp"];
         [dv setValue:modelName forKey:@"modelName"];
         NSError *error;
         if (![context save:&error]) {
             @throw error.description;
         }
     }
+
+}
+
++ (void)markAsLatestForName:(NSString *)modelName
+{
+    [self markTime:(long)([[NSDate date] timeIntervalSince1970]) forName:modelName];
 }
 
 @end

@@ -10,5 +10,5 @@
 
 @protocol NSManagedObjectContextHolder <NSObject>
 - (NSManagedObjectContext *)managedObjectContext;
-
+- (NSManagedObjectContext *)tempManagedObjectContext;
 @end

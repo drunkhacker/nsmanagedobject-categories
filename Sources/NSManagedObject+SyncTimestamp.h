@@ -13,5 +13,6 @@
 + (void)markAsLatest;
 + (long)lastDataVersionForName:(NSString *)name;
 + (void)markAsLatestForName:(NSString *)name;
-
++ (void)markTime:(long)ts forName:(NSString *)modelName;
++ (void)markTime:(long)ts;
 @end
