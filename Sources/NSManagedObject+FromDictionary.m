@@ -132,6 +132,7 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
     unsigned int i = 0;
     
     NSMutableArray *existKeys = [NSMutableArray arrayWithCapacity:keys.count];
+    NSMutableDictionary *propkeys = [NSMutableDictionary dictionaryWithCapacity:keys.count];
     
     for (objc_property_t *pp = properties; i<n; i++, pp++) {
         objc_property_t property = *pp;
@@ -140,6 +141,7 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
         for (NSString *key in keys) {
             if ([propName isEqualToString:key] || [[propName toUnderscore] isEqualToString:key]) {
                 [existKeys addObject:key];
+                propkeys[key] = propName;
             }
         }
     }
@@ -150,7 +152,7 @@ static inline NSPredicate *equalPredicate(NSString *key, id value) {
     } else {
         NSMutableArray *preds = [NSMutableArray arrayWithCapacity:existKeys.count];
         for (NSString *k in existKeys) {
-            [preds addObject:equalPredicate(k, dict[k])];
+            [preds addObject:equalPredicate(propkeys[k], dict[k] ?: dict[[k toUnderscore]])];
         }
         arr = [self findWithPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:preds]];
     }
